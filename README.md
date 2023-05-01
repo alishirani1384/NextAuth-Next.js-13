@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Step-by-Step Tutorial on How to Use Next Auth in Next.js 13 using Route Handlers.
 
-## Getting Started
+1.  Introduction
+2.  Why use Next Auth?
+3.  What are Route Handlers?
+4.  How to set up Next Auth
+5.  How to use Route Handlers with Next Auth
+6.  Conclusion
 
-First, run the development server:
+## 1-Introduction
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+Next.js is a JavaScript framework that enables developers to create front-end web applications that are run on a server. It is a React-based framework that is easy to use and provides a number of features, such as server-side rendering, code splitting, and static exporting.  
+Next.js also has an Authentication package called Next Auth that makes it easy to add authentication to a Next.js app. In this tutorial, we will show you how to use Next Auth and Next.js 13 to create a server-side rendered React app with basic authentication.
+
+## 2-Why use Next Auth?
+
+Next Auth is a secure authentication system for Next.js applications. It is based on JSON Web Tokens (JWT) and provides authentication and authorization for Next.js applications.
+
+## 3-What are Route Handlers?
+
+In Next.js 13, Route Handlers are a new feature that allows developers to create custom request handlers for a given route using the Web Request and Response APIs. Route Handlers are a replacement for the previous API Routes in Next.js.
+
+## 4-How to set up Next Auth
+
+To set up NextAuth in a Next.js application, you need to follow a few steps. First, you need to create a file called  
+**route.js**  in the  **app/api/auth/[...nextauth]**  directory. This file contains the dynamic route handler for NextAuth.
+
+Next, you need to configure your authentication providers. NextAuth supports a wide range of providers, including Google, Facebook, Twitter, and more. You can configure your providers by setting the appropriate environment variables or by passing them as options to the providers array in your NextAuth configuration.  
+Here's an example of how to configure Google as an authentication provider in NextAuth:  
+
+```
+// app/api/auth/[...nextauth]/route.js
+
+import NextAuth from 'next-auth'
+import GoogleProvider from 'next-auth/providers/google'
+
+export const options={
+    GoogleProvider({
+         clientId: process.env.GOOGLE_CLIENT_ID,
+         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      })
+}
+
+const handler=NextAuth(options)
+
+export {handler as GET , handler as POST}
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 5-How to use Route Handlers with Next Auth
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+import {options} from "app/api/auth/[...nextauth]/route.js"
+import {getServerSession} from "next-auth/next"
 
-[http://localhost:3000/api/hello](http://localhost:3000/api/hello) is an endpoint that uses [Route Handlers](https://beta.nextjs.org/docs/routing/route-handlers). This endpoint can be edited in `app/api/hello/route.ts`.
+async function page(){
+  const session = await getServerSession(options)
+  console.log(session.user)
+}
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```
 
-## Learn More
+## 6-Conclusion
 
-To learn more about Next.js, take a look at the following resources:
+I have 6 minute video about this I hope it help if you liked the video don't forget to subscribe and hit the like button.
+### [Video](https://www.youtube.com/embed/FUDL95L5aW0)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Links
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+**[YOUTUBE](https://www.youtube.com/@YTCodewithAli)**
 
-## Deploy on Vercel
+**[GITHUB](https://github.com/alishirani1384)**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**[LinkedIn](https://linkedin.com/in/ali-shirani-145bb61a1)**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
